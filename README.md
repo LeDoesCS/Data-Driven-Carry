@@ -16,7 +16,7 @@ This question matters because early game advantages, such as a strong gold lead,
 - **`position`**:  
   - The position or role the individual played during that match.
 
-  - **`result`**:  
+- **`result`**:  
   - A binary indicator of the match outcome for a team, where `1` indicates a win and `0` indicates a loss. This value is consistent across all players on the same team.
 
 - **`golddiffat10`**:  
