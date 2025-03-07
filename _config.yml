@@ -1,3 +1,6 @@
 remote_theme: pages-themes/architect@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
+
+title: Data Driven Carry
+description: A final project that analyzes League of Legend's early game performance to uncover the 'most valuable role' and carry potential
