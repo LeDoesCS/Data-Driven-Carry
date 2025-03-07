@@ -214,3 +214,68 @@ Our baseline model is designed to predict match outcomes using only early game p
 - **F1 Score:** 62.0%
 
 Although the baseline performance indicates that our simple model correctly predicts match outcomes around 58.6% of the time with a balanced F1 score of 62.0%, which isn't the best, these results serve as an initial benchmark. They highlight the challenge of predicting match outcomes based solely on mid lane early game metrics, which is only 1 of 5 positions. In our next step, lets engineer additional features—such as the gold difference range across all roles and total kills at 10 minutes—to capture a more comprehensive picture of early game carry potential and improve overall predictive performance.
+
+
+
+# Final Model
+
+
+To improve upon our baseline model, we engineered two new features to capture additional aspects of early game performance:
+
+- **Gold Difference Range:**  
+  This feature is the difference between the maximum and minimum gold differences across all roles/positions. It reflects the variability in early game resource advantages within a team, helping to identify if a team has a standout role or if performance is more balanced.
+
+- **Total Kills at 10:**  
+  By summing up the kills at 10 minutes across all roles, this feature provides an overall measure of early aggression and impact. This is crucial for evaluating a team's early carry potential.
+
+For our final feature set, we combined these engineered features with our baseline features—**mid_gold** and **mid_killsat10**. The final model is a binary classifier that predicts match outcomes (win or loss) using only early game data, which is available at or before the 10-minute mark.
+
+**Modeling Approach:**  
+We used a single sklearn Pipeline that first applies a **StandardScaler** to standardize our features, and then fits a **RandomForestClassifier**. We performed hyperparameter tuning using GridSearchCV, focusing on:
+- **n_estimators:** to control the number of trees and stabilize predictions.
+- **max_depth:** to balance the complexity and overfitting of each tree.
+- **min_samples_split:** to ensure nodes are split only when a sufficient number of samples is available.
+
+The best hyperparameters found were:
+- **max_depth:** 5  
+- **min_samples_split:** 10  
+- **n_estimators:** 100  
+
+**Performance:**
+
+- **Accuracy:** 59.5%  
+- **F1 Score:** 63.95%
+
+ While our final model only showed very slight improvements over the baseline, this outcome provides valuable insights. It indicates that simply adding these two engineered features may not be sufficient to capture the carry potential we’re trying to model. Even if very minimal, there is some slight indicators linked to match outcome and carry potential. The incremental gain highlights the inherent difficulty of predicting match outcomes using only early game data. It emphasizes that while early advantages are important, they are just one piece of a more complex puzzle that unfolds throughout the match. Many other nuanced factors can come into play, like a comeback, strategic champion picks, in-game adaptations, and unforeseen events that are not captured in early performance metrics.
+
+
+
+## Fairness Analysis
+
+To evaluate whether our final model performs fairly across different groups, we conducted a permutation test using **precision** as our evaluation metric. We defined our groups as follows:
+
+- **Group A:** Teams from matches whose game IDs start with "LOLTMNT01".
+- **Group B:** Teams from all other matches.
+
+**Observed Results:**
+- The model’s precision for **Group A** was *61.25%*.
+- The model’s precision for **Group B** was *55.77%*.
+- The observed difference in precision (Group A - Group B) was approximately *5.48%*.
+
+**Permutation Test:**
+We shuffled the group labels 1,000 times and recalculated the precision difference for each permutation. The permutation test resulted in a p-value of *0.187*, meaning there is only about a *18.7%* chance that the observed difference in precision could have occurred by random chance alone.
+
+<iframe
+  src="assets/fig9.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+**Conclusion:**
+Based on the permutation test, we fail reject the null hypothesis that the model's precision is roughly the same across both groups. This suggests that, in terms of precision, our final model does not appear to perform significantly worse for one group compared to the other. While our model is not perfect, these findings provide a basis for further investigation and refinement, ensuring that the model's performance is equitable across different match contexts.
+
+
+
+
