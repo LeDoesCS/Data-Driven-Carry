@@ -132,3 +132,28 @@ Below is an interactive Plotly histogram that shows the empirical distribution o
 
   
 The histogram shows that the observed difference (0.245) lies in the extreme tail of the permutation distribution, with only about 1% of the random permutations producing a difference as extreme. This confirms that the missingness in **golddiffat10** is significantly associated with kill counts, whereas a similar test for **position** showed no such dependency.
+
+
+
+# Hypothesis Testing
+
+
+Lets investigate one case more closely, we'll look at whether teams that secure more early kills tend to win. We performed a permutation test comparing **killsat10** (kills at the 10-minute mark) between winning and losing teams.
+
+**Null Hypothesis (H₀):**  
+The average number of kills at 10 minutes is the same for winning teams and losing teams.
+
+**Alternative Hypothesis (H₁):**  
+Winning teams have a higher average number of kills at 10 minutes than losing teams.
+
+**Test Statistic & Significance Level:**  
+We use the **difference in mean killsat10** (winners minus losers) as our test statistic.
+
+**Results:**  
+- **Observed difference in mean killsat10:** 0.12 (winners average about 0.12 more kills at 10 minutes than losers)  
+- **p-value:** 0.0  
+
+Because the p-value is well below 0.05, we have strong evidence against the null hypothesis. In other words, it is unlikely that this observed difference in early kills occurred by chance alone, suggesting that winning teams do indeed tend to secure more kills at 10 minutes.
+
+**Conclusion:**  
+We fail to confirm that winners and losers have the same early kill counts; instead, the data support the claim that winning teams achieve a higher average killsat10. However, we cannot definitively prove this relationship holds true for every possible match scenario, our findings are based on statistical inference and subject to the limitations of our dataset. Identifying whether winners consistently secure more early kills can help validate the importance of early aggression and lane dominance in League of Legends. We see here that is not just random chance that winners tend to get more early kills, showing some correlation or association between early kills and match outcome.
