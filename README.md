@@ -257,13 +257,19 @@ To evaluate whether our final model performs fairly across different groups, we 
 - **Group A:** Teams from matches whose game IDs start with "LOLTMNT01".
 - **Group B:** Teams from all other matches.
 
+**Null Hypothesis (H₀):**  
+The model is fair. Its precision for Group A is equal to its precision for Group B, meaning any observed difference is due to random chance.
+
+**Alternative Hypothesis (H₁):**  
+The model is unfair. Its precision for Group A is significantly different from its precision for Group B.
+
 **Observed Results:**
 - The model’s precision for **Group A** was *61.25%*.
 - The model’s precision for **Group B** was *55.77%*.
 - The observed difference in precision (Group A - Group B) was approximately *5.48%*.
 
 **Permutation Test:**
-We shuffled the group labels 1,000 times and recalculated the precision difference for each permutation. The permutation test resulted in a p-value of *0.187*, meaning there is only about a *18.7%* chance that the observed difference in precision could have occurred by random chance alone.
+ We shuffled the group labels 1,000 times and recalculated the precision difference for each permutation. The permutation test resulted in a p-value of *0.187*, meaning there is only about a *18.7%* chance that the observed difference in precision could have occurred by random chance alone.
 
 <iframe
   src="assets/fig9.html"
@@ -274,7 +280,7 @@ We shuffled the group labels 1,000 times and recalculated the precision differen
 
 
 **Conclusion:**
-Based on the permutation test, we fail reject the null hypothesis that the model's precision is roughly the same across both groups. This suggests that, in terms of precision, our final model does not appear to perform significantly worse for one group compared to the other. While our model is not perfect, these findings provide a basis for further investigation and refinement, ensuring that the model's performance is equitable across different match contexts.
+Based on the permutation test, we **fail reject the null hypothesis** that the model's precision is roughly the same across both groups. This suggests that, in terms of precision, **our final model does not appear to perform significantly worse for one group compared to the other**. While our model is not perfect, these findings provide a basis for further investigation and refinement, ensuring that the model's performance is equitable across different match contexts.
 
 
 
