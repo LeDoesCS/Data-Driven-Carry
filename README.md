@@ -152,6 +152,13 @@ We use the **difference in mean killsat10** (winners minus losers) as our test s
 - **Observed difference in mean killsat10:** 0.12 (winners average about 0.12 more kills at 10 minutes than losers)  
 - **p-value:** 0.0  
 
+<iframe
+  src="assets/fig8.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Because the p-value is well below 0.05, we have strong evidence against the null hypothesis. In other words, it is unlikely that this observed difference in early kills occurred by chance alone, suggesting that winning teams do indeed tend to secure more kills at 10 minutes.
 
 **Conclusion:**  
