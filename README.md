@@ -130,7 +130,6 @@ Below is an interactive Plotly histogram that shows the empirical distribution o
   frameborder="0"
 ></iframe>
 
-  
 The histogram shows that the observed difference (0.245) lies in the extreme tail of the permutation distribution, with only about 1% of the random permutations producing a difference as extreme. This confirms that the missingness in **golddiffat10** is significantly associated with kill counts, whereas a similar test for **position** showed no such dependency.
 
 
