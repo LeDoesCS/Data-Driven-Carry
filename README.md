@@ -1,8 +1,9 @@
-# Introduction
 
-For those that are unaware, **League of Legends**, also called "League" or "LoL" for short, is a 5 vs 5 online game where each player controls a character called "Champions", each with different abilities, roles, and playstyles where the common goal is to defend your team's base whilst trying to destory the other teams'. Maps consists of 3 lanes, seperated by jungles, and scattered with objectives to boost in-game metrics like gold, levels, items, etc, and where gaps in these come from team synergy, game sense, mechanical skills, and overall luck. You can found our more about the dataset here: [League Dataset](https://oracleselixir.com/tools/downloads)
+# League of Legends
 
-In this project, we will analyze the **2025 E-sports Match Dataset**, which comprises over **15,000 observations** containing stats like kills, gold, deaths, and more for each player in every match.
+For those that are unaware, **League of Legends**, also called "League" or "LoL" for short, is a 5 vs 5 online game where each player controls a character called "Champions", each with different abilities, roles, and playstyles where the common goal is to defend your team's base whilst trying to destory the other teams'. Maps consists of 3 lanes, seperated by jungles, and scattered with objectives to boost in-game metrics like gold, levels, items, etc, and where gaps in these come from team synergy, game sense, mechanical skills, and overall luck. You can found out more about the dataset here: [League Dataset](https://oracleselixir.com/tools/downloads)
+
+In this project, we will analyze the **2025 E-sports Match Dataset**, which comprises over **15,000 observations** containing stats like kills, gold, deaths, and more for each player in every match. For this, we'll pose a central question that our data analysis will stem from.
 
 ## Central Question:
 *Which role is most valuable in carrying a team to victory based on early game performance?*  
@@ -39,17 +40,17 @@ By exploring these columns, this project aims to uncover which role consistently
 
 For context, each game consists of 12 rows, 10 of it is comprises of each player and their stats, and the 2 leftover comprises of team stat for both team. Since we are looking at individual stats, we can drop the rows that consist of only match stats.
 
-We'll also ensure each column that should be a boolean is a boolean, ensure the names of each column are properly named (contains no spaces), and drop columns that aren't necessary as of now. Some notable columns of the ones we kept are **`position`**, **`result`**, **`killsat10`**, **`golddiffat10`**.
+Results, our primary concern, is a binary column of 1s and 0s, we'll change that so it's True for winners, and False for non-winners. We'll also ensure each column that should be a boolean is a boolean, ensure the names of each column are properly named (contains no spaces), and drop columns that aren't necessary as of now. Some notable columns of the ones we kept are **`position`**, **`result`**, **`killsat10`**, **`golddiffat10`**.
 
 Below is a preview of the first few rows of our cleaned DataFrame:
 
-| playername   | teamname   | champion   | position   | result   |   kills |   golddiffat10 |   killsat10 |   deathsat10 |   assistsat10 |
-|:-------------|:-----------|:-----------|:-----------|:---------|--------:|---------------:|------------:|-------------:|--------------:|
-| PatkicaA     | IZI Dream  | Gnar       | top        | False    |       1 |           -336 |           0 |            1 |             0 |
-| Joinze       | IZI Dream  | Maokai     | jng        | False    |       0 |           -474 |           0 |            0 |             0 |
-| Sayn         | IZI Dream  | Hwei       | mid        | False    |       1 |           -405 |           0 |            0 |             0 |
-| Shiganari    | IZI Dream  | Jinx       | bot        | False    |       1 |           -422 |           0 |            0 |             0 |
-| Lekcyc       | IZI Dream  | Leona      | sup        | False    |       0 |            -85 |           0 |            0 |             0 |
+| gameid           | teamid                                  | playername   | teamname   | champion   | position   | result   |   kills |   golddiffat10 |   killsat10 |   deathsat10 |   assistsat10 |
+|:-----------------|:----------------------------------------|:-------------|:-----------|:-----------|:-----------|:---------|--------:|---------------:|------------:|-------------:|--------------:|
+| LOLTMNT03_179647 | oe:team:2799e04c7212d3c262467ef25427eda | PatkicaA     | IZI Dream  | Gnar       | top        | False    |       1 |           -336 |           0 |            1 |             0 |
+| LOLTMNT03_179647 | oe:team:2799e04c7212d3c262467ef25427eda | Joinze       | IZI Dream  | Maokai     | jng        | False    |       0 |           -474 |           0 |            0 |             0 |
+| LOLTMNT03_179647 | oe:team:2799e04c7212d3c262467ef25427eda | Sayn         | IZI Dream  | Hwei       | mid        | False    |       1 |           -405 |           0 |            0 |             0 |
+| LOLTMNT03_179647 | oe:team:2799e04c7212d3c262467ef25427eda | Shiganari    | IZI Dream  | Jinx       | bot        | False    |       1 |           -422 |           0 |            0 |             0 |
+| LOLTMNT03_179647 | oe:team:2799e04c7212d3c262467ef25427eda | Lekcyc       | IZI Dream  | Leona      | sup        | False    |       0 |            -85 |           0 |            0 |             0 |
 
 
 ## Univariate Analysis
@@ -163,3 +164,53 @@ Because the p-value is well below 0.05, we have strong evidence against the null
 
 **Conclusion:**  
 We fail to confirm that winners and losers have the same early kill counts; instead, the data support the claim that winning teams achieve a higher average killsat10. However, we cannot definitively prove this relationship holds true for every possible match scenario, our findings are based on statistical inference and subject to the limitations of our dataset. Identifying whether winners consistently secure more early kills can help validate the importance of early aggression and lane dominance in League of Legends. We see here that is not just random chance that winners tend to get more early kills, showing some correlation or association between early kills and match outcome.
+
+
+
+# Framing a Prediction Problem
+
+
+Our prediction problem is centered on forecasting match outcomes using only early game performance data. Specifically, we ask:  
+*Can we predict whether a team wins or loses based solely on early game metrics?
+
+**Type:**  
+Binary Classification
+
+**Response Variable:**  
+- **result** – This variable indicates whether a team wins (`True`) or loses (`False`). I chose it because winning is the ultimate goal in competitive play, and understanding which early performance indicators predict victory is crucial for evaluating carry potential.
+
+**Features Available at Prediction Time:**  
+- Early gold difference at 10 minutes  
+- Early kill counts
+- Early death counts
+- Early assist counts 
+- Additional role-based performance metrics  
+
+**Evaluation Metrics:**  
+- **Accuracy:** Measures the overall percentage of correct predictions.  
+- **F1-Score:** Balances precision and recall, particularly important if there is any imbalance in match outcomes.
+
+**Justification:**  
+By using these early indicators to predict the final match outcome, our model provides actionable insights into which roles demonstrate the highest carry potential. This approach not only aligns with the competitive objectives of League of Legends but also informs strategic decisions on resource allocation and player development.
+
+
+
+# Baseline Model
+
+Our baseline model is designed to predict match outcomes using only early game performance metrics. Specifically, we focus on two metrics from the mid lane:
+
+- **mid_gold:** The average gold difference at 10 minutes for mid lane players.
+- **mid_killsat10:** The average number of kills at 10 minutes for mid lane players.
+
+**Model Setup:**  
+- We aggregated player-level data into a team-level dataset and extracted role-specific metrics.
+- For our baseline, we used only **mid_gold** and **mid_killsat10**, which are both quantitative features.
+- A single sklearn Pipeline was built that applies a **StandardScaler** to standardize the features, followed by a **Logistic Regression** classifier for binary classification.
+- The model was trained on 80% of the data and evaluated on the remaining 20%, using accuracy and F1 score as our performance metrics.
+
+**Performance:**
+
+- **Accuracy:** 58.6%  
+- **F1 Score:** 62.0%
+
+Although the baseline performance indicates that our simple model correctly predicts match outcomes around 58.6% of the time with a balanced F1 score of 62.0%, which isn't the best, these results serve as an initial benchmark. They highlight the challenge of predicting match outcomes based solely on mid lane early game metrics, which is only 1 of 5 positions. In our next step, lets engineer additional features—such as the gold difference range across all roles and total kills at 10 minutes—to capture a more comprehensive picture of early game carry potential and improve overall predictive performance.
