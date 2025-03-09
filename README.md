@@ -96,9 +96,9 @@ Finally, we explored aggregate statistics by creating a pivot table that shows t
 | top                |                  0.290017 |                          0 |                0.325083 |                           0 |                            0 |                         0 |
 
    
-- **Bot lane** shows the highest average kills at 10 minutes (about 0.65) while maintaining a relatively low average deaths (about 0.37). This suggests bot laners often secure an early edge in kills.  
-- **Support** has the highest average deaths at 10 minutes (about 0.59) and the lowest kills (about 0.23), consistent with a role that prioritizes enabling teammates rather than racking up kills.  
-- **Jungle**, **mid**, and **top** fall somewhere in between, indicating more moderate early aggression and deaths.  
+- **Bot lane** shows the highest average kills at 10 minutes (about 0.65). This suggests bot laners often secure an early edge in kills.  While 
+- **Support** has the highest average assists at 10 minutes (about 1.24) and the lowest kills (about 0.23), consistent with a role that prioritizes enabling teammates rather than racking up kills.  
+- **Gold Difference** averages out to 0 since we are looking at both teams and other stats like median kills don't vary that much. This shows that over most games, it's quite difficult to secure stats like kills and assists but being able to could potentially put them ahead in the long run.
 
 These differences reflect each role’s responsibilities and risk profiles in the early game. For instance, supports often roam and engage early, leading to more deaths, whereas bot laners can capitalize on assists and positioning to secure more kills. This breakdown highlights how each role’s early performance can influence a team’s overall carry potential and early-game momentum.
 
@@ -250,7 +250,7 @@ The best hyperparameters found were:
 
 
 
-## Fairness Analysis
+# Fairness Analysis
 
 To evaluate whether our final model performs fairly across different groups, we conducted a permutation test using **precision** as our evaluation metric. We defined our groups as follows:
 
@@ -279,8 +279,15 @@ The model is unfair. Its precision for Group A is significantly different from i
 ></iframe>
 
 
-**Conclusion:**
+
 Based on the permutation test, we **fail reject the null hypothesis** that the model's precision is roughly the same across both groups. This suggests that, in terms of precision, **our final model does not appear to perform significantly worse for one group compared to the other**. While our model is not perfect, these findings provide a basis for further investigation and refinement, ensuring that the model's performance is equitable across different match contexts.
+
+
+
+# Conclusion
+Going back to our initial proposed question: "Which role is most valuable in carrying a team to victory based on early game performance?" The long data-science answer is that while early game metrics like gold difference at 10 minutes and early kill counts provide valuable signals about carry potential, they capture only part of the story. Our analysis indicates that although some roles exhibit slightly higher early advantages, these metrics alone do not robustly predict match outcomes. The short answer is, there isn't. Early advantages are important but we must considere mid- and late-game dynamics, such as team synergy, strategic adaptations, and pivotal in-game decisions and even a bit of luck, to truly determine success. Ultimately, our findings highlight that while early carry potential sets the stage, it is the continuous interplay of strategy and execution throughout the match that defines victory. It is a team game for a reason. That being said, get back on the rift legends!
+
+
 
 
 
