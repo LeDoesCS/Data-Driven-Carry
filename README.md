@@ -87,13 +87,13 @@ The boxplots show that bot lane seems to do best overall when it comes to securi
 
 Finally, we explored aggregate statistics by creating a pivot table that shows the average **kills and deaths at 10 minutes** for each role across games.
 
-| position   |   deathsat10 |   killsat10 |
-|:-----------|-------------:|------------:|
-| bot        |     0.374175 |    0.652228 |
-| jng        |     0.427393 |    0.528053 |
-| mid        |     0.377063 |    0.455446 |
-| sup        |     0.585809 |    0.230611 |
-| top        |     0.448845 |    0.325083 |
+| ('position', '')   |   ('mean', 'assistsat10') |   ('mean', 'golddiffat10') |   ('mean', 'killsat10') |   ('median', 'assistsat10') |   ('median', 'golddiffat10') |   ('median', 'killsat10') |
+|:-------------------|--------------------------:|---------------------------:|------------------------:|----------------------------:|-----------------------------:|--------------------------:|
+| bot                |                  0.547442 |                          0 |                0.652228 |                           0 |                            0 |                         0 |
+| jng                |                  0.900165 |                          0 |                0.528053 |                           1 |                            0 |                         0 |
+| mid                |                  0.476898 |                          0 |                0.455446 |                           0 |                            0 |                         0 |
+| sup                |                  1.24092  |                          0 |                0.230611 |                           1 |                            0 |                         0 |
+| top                |                  0.290017 |                          0 |                0.325083 |                           0 |                            0 |                         0 |
 
    
 - **Bot lane** shows the highest average kills at 10 minutes (about 0.65) while maintaining a relatively low average deaths (about 0.37). This suggests bot laners often secure an early edge in kills.  
